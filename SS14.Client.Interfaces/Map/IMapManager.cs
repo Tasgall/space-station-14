@@ -11,17 +11,15 @@ namespace SS14.Client.Interfaces.Map
         event TileChangeEvent OnTileChanged;
         int GetTileSpacing();
         int GetWallThickness();
-        void Shutdown();
         bool IsSolidTile(Vector2D pos);
         void HandleNetworkMessage(NetIncomingMessage message);
         void HandleAtmosDisplayUpdate(NetIncomingMessage message);
 
+        void Shutdown();
 
         ITile[] GetAllTilesIn(RectangleF Area);
         ITile[] GetAllFloorIn(RectangleF Area);
-        ITile[] GetAllWallIn(RectangleF Area);
 
-        ITile GetWallAt(Vector2D pos);
         ITile GetFloorAt(Vector2D pos);
         ITile[] GetAllTilesAt(Vector2D pos);
 

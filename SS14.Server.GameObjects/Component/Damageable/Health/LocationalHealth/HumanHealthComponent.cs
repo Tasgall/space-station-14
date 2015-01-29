@@ -43,29 +43,6 @@ namespace SS14.Server.GameObjects
             var statuscomp = Owner.GetComponent<StatusEffectComp>(ComponentFamily.StatusEffects);
             if (statuscomp == null)
                 return;
-
-            ITile t = map.GetFloorAt(Owner.GetComponent<TransformComponent>(ComponentFamily.Transform).Position);
-
-            if (t == null)
-            {
-                statuscomp.AddEffect("Hypoxia", 5); //Out of map bounds, you is asphyxiatin to death bitch
-            }
-            else
-            {
-                bool hasInternals = HasInternals();
-
-                if (t.GasCell.GasAmount(GasType.Toxin) > 0.01 && !hasInternals)
-                    //too much toxin in the air, bro
-                {
-                    statuscomp.AddEffect("ToxinInhalation", 20);
-                }
-                if (!hasInternals && t.GasCell.Pressure < 10 //Less than 10kPa
-                    ||
-                    (t.GasCell.GasAmount(GasType.Oxygen)/
-                     t.GasCell.TotalGas) < 0.10f) //less than 10% oxygen
-                    //Not enough oxygen in the mixture, or pressure is too low.
-                    statuscomp.AddEffect("Hypoxia", 5);
-            }
         }
 
         public override void HandleInstantiationMessage(NetConnection netConnection)

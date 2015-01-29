@@ -1,4 +1,7 @@
-﻿using GorgonLibrary;
+﻿
+#if false
+
+using GorgonLibrary;
 using GorgonLibrary.Graphics;
 using SS14.Client.Interfaces.Collision;
 using SS14.Client.Interfaces.Map;
@@ -60,6 +63,8 @@ namespace SS14.Client.Services.Tiles
             surroundDirsSE = 0;
             float halfSpacing = mapMgr.GetTileSpacing() / 2f;
             Vector2D checkPos = Position + new Vector2D(1f, 1f);
+
+            /*
             if (mapMgr.GetWallAt(checkPos + new Vector2D(0, -halfSpacing)) != null) // North side
             {
                 surroundDirsNW += 1;
@@ -94,6 +99,7 @@ namespace SS14.Client.Services.Tiles
             {
                 surroundDirsSE += 8;
             }
+            */
 
             return new Point(surroundDirsNW, surroundDirsSE);
         }
@@ -139,7 +145,7 @@ namespace SS14.Client.Services.Tiles
         }
 
 
-        #region ICollidable Members
+#region ICollidable Members
 
         public bool IsHardCollidable
         {
@@ -519,3 +525,4 @@ namespace SS14.Client.Services.Tiles
         }
     }
 }
+#endif

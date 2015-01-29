@@ -15,7 +15,6 @@ using SS14.Server.Interfaces.Serialization;
 using SS14.Server.Interfaces.ServerConsole;
 using SS14.Server.Modules;
 using SS14.Server.Modules.Client;
-using SS14.Server.Services.Atmos;
 using SS14.Server.Services.Log;
 using SS14.Server.Services.Map;
 using SS14.Server.Services.Round;
@@ -291,7 +290,7 @@ namespace SS14.Server
                 EntityManager.ComponentManager.Update(frameTime);
                 EntityManager.Update(frameTime);
                 var start = stopWatch.ElapsedTicks;
-                ((AtmosManager)IoCManager.Resolve<IAtmosManager>()).Update(frameTime);
+                //((AtmosManager)IoCManager.Resolve<IAtmosManager>()).Update(frameTime);
                 var end = stopWatch.ElapsedTicks;
                 var atmosTime = (end - start) / (float)Stopwatch.Frequency * 1000;
                 IoCManager.Resolve<IRoundManager>().CurrentGameMode.Update();
@@ -422,8 +421,6 @@ namespace SS14.Server
             else if (Runlevel == RunLevel.Game)
             {
                 IoCManager.Resolve<IMapManager>().InitMap(_serverMapName);
-
-                IoCManager.Resolve<IAtmosManager>().InitializeGasCells();
 
                 EntityManager = new EntityManager(IoCManager.Resolve<ISS14NetServer>());
 
@@ -826,9 +823,6 @@ namespace SS14.Server
 
             // Lets also send them all the items and mobs.
             //EntityManager.SendEntities(connection);
-
-            // Send atmos state to player
-            IoCManager.Resolve<IAtmosManager>().SendAtmosStateTo(connection);
 
             // Todo: Preempt this with the lobby.
             IoCManager.Resolve<IRoundManager>().SpawnPlayer(

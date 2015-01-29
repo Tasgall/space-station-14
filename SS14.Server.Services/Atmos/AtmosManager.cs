@@ -1,4 +1,6 @@
-﻿using BKSystem.IO;
+﻿#if false
+
+using BKSystem.IO;
 using Lidgren.Network;
 using SS14.Server.Interfaces.Atmos;
 using SS14.Server.Interfaces.Map;
@@ -485,3 +487,5 @@ namespace SS14.Server.Services.Atmos
 
     #endregion
 }
+
+#endif

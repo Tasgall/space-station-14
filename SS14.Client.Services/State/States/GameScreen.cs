@@ -1477,12 +1477,15 @@ namespace SS14.Client.Services.State.States
             RectangleF lightArea = new RectangleF(area.LightPosition - (area.LightAreaSize / 2),
                 area.LightAreaSize);
 
-            ITile[] tiles = MapManager.GetAllWallIn(lightArea);
+            ITile[] tiles = MapManager.GetAllFloorIn(lightArea);
 
             foreach (Tile t in tiles)
             {
-                Vector2D pos = area.ToRelativePosition(t.Position);
-                t.RenderPos(pos.X, pos.Y, MapManager.GetTileSpacing(), (int)area.LightAreaSize.X);
+                if (t.name == "Wall")
+                {
+                    Vector2D pos = area.ToRelativePosition(t.Position);
+                    t.RenderPos(pos.X, pos.Y, MapManager.GetTileSpacing(), (int)area.LightAreaSize.X);
+                }
             }
         }
 
@@ -1494,7 +1497,6 @@ namespace SS14.Client.Services.State.States
             int tilespacing = MapManager.GetTileSpacing();
 
             ITile[] floorTiles = MapManager.GetAllFloorIn(vision);
-            ITile[] wallTiles = MapManager.GetAllWallIn(vision);
 
             foreach (Tile t in floorTiles)
             {
@@ -1502,13 +1504,12 @@ namespace SS14.Client.Services.State.States
 
                 t.RenderGas(WindowOrigin.X, WindowOrigin.Y, tilespacing, _gasBatch);
             }
-
-            
+            /*
             foreach (Tile t in wallTiles.OrderBy(x => x.Position.Y))
             {
                 t.Render(WindowOrigin.X, WindowOrigin.Y, _wallBatch);
                 t.RenderTop(WindowOrigin.X, WindowOrigin.Y, _wallTopsBatch);
-            }
+            }//*/
         }
 
         public void OnTileChanged(PointF tileWorldPosition)

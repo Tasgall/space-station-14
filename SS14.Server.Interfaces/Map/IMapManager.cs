@@ -12,23 +12,21 @@ namespace SS14.Server.Interfaces.Map
         //void NetworkUpdateTile(ITile t);
         void SaveMap();
 
-        void MoveGasCell(ITile fromTile, ITile toTile);
-
         NetOutgoingMessage CreateMapMessage(MapMessage messageType);
         void SendMessage(NetOutgoingMessage message);
-        void Shutdown();
-        int GetMapWidth();
-        int GetMapHeight();
         void SendMap(NetConnection connection);
         int GetTileSpacing();
 
+        void Shutdown();
+
         ITile[] GetAllTilesIn(RectangleF Area);
         ITile[] GetAllFloorIn(RectangleF Area);
-        ITile[] GetAllWallIn(RectangleF Area);
 
-        ITile GetWallAt(Vector2 pos);
         ITile GetFloorAt(Vector2 pos);
         ITile[] GetAllTilesAt(Vector2 pos);
+
+        int GetMapWidth();
+        int GetMapHeight();
 
         ITile GenerateNewTile(Vector2 pos, string type, Direction dir = Direction.North);
         void DestroyTile(ITile s);

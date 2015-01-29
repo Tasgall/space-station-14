@@ -1,4 +1,6 @@
-﻿using GorgonLibrary;
+﻿#if false
+
+using GorgonLibrary;
 using SS14.Client.ClientWindow;
 using SS14.Client.GameObjects;
 using SS14.Client.Interfaces.Map;
@@ -28,7 +30,7 @@ namespace SS14.Client.Services.Placement.Modes
                                                  mouseWorld.Y - (spriteToDraw.Height/2f), spriteToDraw.Width,
                                                  spriteToDraw.Height);
 
-            currentTile = currentMap.GetWallAt(mouseWorld);
+            currentTile = currentMap.GetFloorAt(mouseWorld);
 
             if (!currentMap.IsSolidTile(mouseWorld))
                 return false;
@@ -83,3 +85,5 @@ namespace SS14.Client.Services.Placement.Modes
         }
     }
 }
+
+#endif

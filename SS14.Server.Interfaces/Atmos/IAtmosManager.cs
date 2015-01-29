@@ -1,4 +1,6 @@
-﻿using Lidgren.Network;
+﻿#if false
+
+using Lidgren.Network;
 using SS14.Shared;
 
 namespace SS14.Server.Interfaces.Atmos
@@ -13,3 +15,5 @@ namespace SS14.Server.Interfaces.Atmos
         int NumGasTypes { get; }
     }
 }
+
+#endif

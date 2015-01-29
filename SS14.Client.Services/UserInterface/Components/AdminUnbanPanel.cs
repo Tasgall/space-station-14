@@ -11,7 +11,7 @@ namespace SS14.Client.Services.UserInterface.Components
     internal class AdminUnbanPanel : Window
     {
         private readonly INetworkManager _networkManager;
-        private readonly IResourceManager _resourceManager;
+        new private readonly IResourceManager _resourceManager;
 
         public AdminUnbanPanel(Size size, Banlist banlist, INetworkManager networkManager,
                                IResourceManager resourceManager)

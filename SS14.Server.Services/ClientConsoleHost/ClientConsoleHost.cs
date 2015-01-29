@@ -6,7 +6,6 @@ using SS14.Server.Interfaces.GOC;
 using SS14.Server.Interfaces.Map;
 using SS14.Server.Interfaces.Network;
 using SS14.Server.Interfaces.Player;
-using SS14.Server.Services.Atmos;
 using SS14.Server.Services.Tiles;
 using SS14.Shared;
 using SS14.Shared.GameObjects;
@@ -29,7 +28,6 @@ namespace SS14.Server.Services.ClientConsoleHost
 
             string command = args[0];
 
-            Vector2 position;
             Entity player;
 
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
@@ -92,38 +90,7 @@ namespace SS14.Server.Services.ClientConsoleHost
                         }
                     }
                     break;
-                case "addgas":
-                    if (args.Count > 1 && Convert.ToDouble(args[1]) > 0)
-                    {
-                        if (player != null)
-                        {
-                            double amount = Convert.ToDouble(args[1]);
-                            var t =
-                                map.GetFloorAt(
-                                    player.GetComponent<ITransformComponent>(ComponentFamily.Transform).Position) as
-                                Tile;
-                            if (t != null)
-                                t.GasCell.AddGas((float) amount, GasType.Toxin);
-                            SendConsoleReply(amount.ToString() + " Gas added.", sender);
-                        }
-                    }
-                    break;
-                case "heatgas":
-                    if (args.Count > 1 && Convert.ToDouble(args[1]) > 0)
-                    {
-                        if (player != null)
-                        {
-                            double amount = Convert.ToDouble(args[1]);
-                            var t =
-                                map.GetFloorAt(
-                                    player.GetComponent<ITransformComponent>(ComponentFamily.Transform).Position) as
-                                Tile;
-                            if (t != null)
-                                t.GasCell.AddGas((float) amount, GasType.Toxin);
-                            SendConsoleReply(amount.ToString() + " Gas added.", sender);
-                        }
-                    }
-                    break;
+#if false
                 case "atmosreport":
                     IoCManager.Resolve<IAtmosManager>().TotalAtmosReport();
                     break;
@@ -163,6 +130,7 @@ namespace SS14.Server.Services.ClientConsoleHost
                         }
                     }
                     break;
+#endif
                 case "everyonesondrugs":
                     foreach (IPlayerSession playerfordrugs in IoCManager.Resolve<IPlayerManager>().GetAllPlayers())
                     {

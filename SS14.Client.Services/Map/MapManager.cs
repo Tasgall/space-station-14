@@ -36,7 +36,6 @@ namespace SS14.Client.Services.Map
         private int _mapHeight; // Number of tiles up the map
         private int _mapWidth; // Number of tiles across the map
         private QuadTree<Tile> _groundArray;
-        private QuadTree<Tile> _wallArray;
 
         #endregion
 
@@ -86,8 +85,7 @@ namespace SS14.Client.Services.Map
             int _mapHeight = message.ReadInt32();
 
 
-            _groundArray = new QuadTree<Tile>(new SizeF(2*TileSpacing, 2*TileSpacing), 4);
-            _wallArray = new QuadTree<Tile>(new SizeF(2 * TileSpacing, 2 * TileSpacing), 4);
+            _groundArray = new QuadTree<Tile>(new SizeF(2 * TileSpacing, 2 * TileSpacing), 4);
 
             while (message.PositionInBytes < message.LengthBytes)
             {
@@ -103,11 +101,6 @@ namespace SS14.Client.Services.Map
                 }
                 Tile newTile = GenerateNewTile(GetTileString(index), state, new Vector2D(posX, posY), dir);
                 AddTile(newTile);
-            }
-
-            foreach (Wall w in GetAllWallIn(new RectangleF(0, 0, _mapWidth * TileSpacing, _mapHeight * TileSpacing)))
-            {
-                w.SetSprite();
             }
 
             _loaded = true;
@@ -305,28 +298,12 @@ namespace SS14.Client.Services.Map
 
         public void AddTile(Tile t)
         {
-            if (t.GetType().Name == "Wall")
-            {
-                _wallArray.Insert(t);
-                SetSpritesAround(t);
-            }
-            else
-            {
-                _groundArray.Insert(t);
-            }
+            _groundArray.Insert(t);
         }
 
         private void RemoveTile(Tile t)
         {
-            if (t.GetType().Name == "Wall")
-            {
-                _wallArray.Remove(t);
-                SetSpritesAround(t);
-            }
-            else
-            {
-                _groundArray.Remove(t);
-            }
+            _groundArray.Remove(t);
         }
 
         private Rectangle TilePos(Tile T)
@@ -337,23 +314,12 @@ namespace SS14.Client.Services.Map
         public ITile[] GetAllTilesIn(RectangleF area)
         {
             List<Tile> tiles = _groundArray.Query(area);
-            tiles.AddRange(_wallArray.Query(area));
             return tiles.ToArray();
         }
 
         public ITile[] GetAllFloorIn(RectangleF Area)
         {
             return _groundArray.Query(Area).ToArray();
-        }
-
-        public ITile[] GetAllWallIn(RectangleF Area)
-        {
-            return _wallArray.Query(Area).ToArray();
-        }
-
-        public ITile GetWallAt(Vector2D pos)
-        {
-            return GetAllWallIn(new RectangleF(pos.X, pos.Y, 2f, 2f)).FirstOrDefault();
         }
 
         public ITile GetFloorAt(Vector2D pos)
@@ -459,9 +425,7 @@ namespace SS14.Client.Services.Map
 
         public bool IsSolidTile(Vector2D worldPos)
         {
-            var tile = (Tile) GetWallAt(worldPos);
-            if (tile == null) return false;
-            return true;
+            return false;
         }
 
         #endregion
@@ -483,17 +447,6 @@ namespace SS14.Client.Services.Map
         {
             if (OnTileChanged != null)
                 OnTileChanged(t.Position);
-        }
-
-        private void SetSpritesAround(Tile t)
-        {
-            Tile[] tiles = (Tile[])GetAllWallIn(new RectangleF(t.Position.X - (TileSpacing / 2f), t.Position.Y - (TileSpacing / 2f), TileSpacing * 2, TileSpacing * 2));
-
-            foreach (Tile u in tiles)
-            {
-                if(u != t)
-                    u.SetSprite();
-            }
         }
 
         

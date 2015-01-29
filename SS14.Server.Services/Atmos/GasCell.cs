@@ -1,4 +1,6 @@
-﻿using BKSystem.IO;
+﻿#if false
+
+using BKSystem.IO;
 using SS14.Server.Interfaces.Atmos;
 using SS14.Server.Interfaces.Map;
 using SS14.Server.Services.Log;
@@ -21,7 +23,6 @@ namespace SS14.Server.Services.Atmos
         private bool calculated = true;
         private Vector2 gasVel;
         public Dictionary<GasType, float> lastSentGasses;
-        private float lastVelSent = 0;
         private Random rand;
         private Tile[,] neighbours;
 
@@ -464,3 +465,5 @@ namespace SS14.Server.Services.Atmos
         }
     }
 }
+
+#endif

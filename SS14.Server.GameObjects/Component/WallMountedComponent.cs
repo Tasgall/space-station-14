@@ -80,11 +80,11 @@ namespace SS14.Server.GameObjects
         {
             var map = IoCManager.Resolve<IMapManager>();
 
-            var previousTile = map.GetWallAt(args.VectorFrom) as Tile;
+            var previousTile = map.GetFloorAt(args.VectorFrom) as Tile;
             if(previousTile != null)
                 previousTile.TileChange -= TileChanged;
 
-            var currentTile = map.GetWallAt(args.VectorTo) as Tile;
+            var currentTile = map.GetFloorAt(args.VectorTo) as Tile;
 
             if (currentTile == null) return;
 
@@ -97,11 +97,11 @@ namespace SS14.Server.GameObjects
         {
             var map = IoCManager.Resolve<IMapManager>();
 
-            var currentTile = map.GetWallAt(tilePos) as Tile;
+            var currentTile = map.GetFloorAt(tilePos) as Tile;
 
             if (currentTile == null) return;
 
-            var previousTile = map.GetWallAt(Owner.GetComponent<TransformComponent>(ComponentFamily.Transform).Position) as Tile;
+            var previousTile = map.GetFloorAt(Owner.GetComponent<TransformComponent>(ComponentFamily.Transform).Position) as Tile;
 
             previousTile.TileChange -= TileChanged;
 

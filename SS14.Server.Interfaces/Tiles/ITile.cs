@@ -10,10 +10,6 @@ namespace SS14.Server.Interfaces.Tiles
     public interface ITile
     {
         TileState TileState { get; set; }
-        IGasCell GasCell { get; set; }
-        bool StartWithAtmos { get; }
-        bool GasPermeable { get; }
-        bool GasSink { get; }
         event TileChangeHandler TileChange; //This event will be used for wall mounted objects and
         void RaiseChangedEvent(Type type);
         void AddDecal(DecalType type);

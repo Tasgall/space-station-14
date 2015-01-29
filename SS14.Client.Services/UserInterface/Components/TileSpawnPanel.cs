@@ -16,7 +16,7 @@ namespace SS14.Client.Services.UserInterface.Components
     {
         private readonly Label _clearLabel;
         private readonly IPlacementManager _placementManager;
-        private readonly IResourceManager _resourceManager;
+        new private readonly IResourceManager _resourceManager;
         private readonly ScrollableContainer _tileList;
         private readonly Textbox _tileSearchTextbox;
 

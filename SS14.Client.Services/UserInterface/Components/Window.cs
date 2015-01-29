@@ -10,7 +10,7 @@ namespace SS14.Client.Services.UserInterface.Components
     internal class Window : ScrollableContainer
     {
         protected const int titleBuffer = 1;
-        protected readonly IResourceManager _resourceManager;
+        new protected readonly IResourceManager _resourceManager;
 
         public Color TitleColor1 = Color.SlateGray;
         public Color TitleColor2 = Color.DarkSlateGray;

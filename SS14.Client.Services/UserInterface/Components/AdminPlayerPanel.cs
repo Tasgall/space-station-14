@@ -11,7 +11,7 @@ namespace SS14.Client.Services.UserInterface.Components
     internal class AdminPlayerPanel : Window
     {
         private readonly INetworkManager _networkManager;
-        private readonly IResourceManager _resourceManager;
+        new private readonly IResourceManager _resourceManager;
 
         public AdminPlayerPanel(Size size, INetworkManager networkManager, IResourceManager resourceManager,
                                 NetIncomingMessage message)

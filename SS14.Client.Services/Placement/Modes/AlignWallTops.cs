@@ -1,4 +1,6 @@
-﻿using GorgonLibrary;
+﻿
+#if false
+using GorgonLibrary;
 using SS14.Client.ClientWindow;
 using SS14.Client.GameObjects;
 using SS14.Client.Interfaces.Map;
@@ -17,6 +19,8 @@ namespace SS14.Client.Services.Placement.Modes
 
         public override bool Update(Vector2D mouseS, IMapManager currentMap)
         {
+            return false;
+#if false
             if (currentMap == null) return false;
 
             spriteToDraw = GetDirectionalSprite(pManager.CurrentBaseSprite);
@@ -107,6 +111,7 @@ namespace SS14.Client.Services.Placement.Modes
                                        mouseWorld.Y - ClientWindowData.Singleton.ScreenOrigin.Y);
 
             return true;
+#endif
         }
 
         public override void Render()
@@ -123,3 +128,4 @@ namespace SS14.Client.Services.Placement.Modes
         }
     }
 }
+#endif

@@ -121,13 +121,7 @@ namespace SS14.Server.GameObjects.Item.ItemCapability
 
         public ItemCapabilityQueryResultType ResultStatus
         {
-            get
-            {
-                if (resultStatus == null)
-                    return ItemCapabilityQueryResultType.Null;
-                else
-                    return resultStatus;
-            }
+            get { return resultStatus; }
             set { resultStatus = value; }
         }
 

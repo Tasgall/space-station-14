@@ -1,4 +1,5 @@
-﻿using GorgonLibrary;
+﻿#if false
+using GorgonLibrary;
 using GorgonLibrary.Graphics;
 using SS14.Client.ClientWindow;
 using SS14.Client.GameObjects;
@@ -126,3 +127,4 @@ namespace SS14.Client.Services.Placement.Modes
         }
     }
 }
+#endif

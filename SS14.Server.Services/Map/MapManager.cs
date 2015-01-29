@@ -2,7 +2,6 @@
 using SS14.Server.Interfaces.Map;
 using SS14.Server.Interfaces.Network;
 using SS14.Server.Interfaces.Tiles;
-using SS14.Server.Services.Atmos;
 using SS14.Server.Services.Log;
 using SS14.Server.Services.Tiles;
 using SS14.Shared;
@@ -21,14 +20,12 @@ namespace SS14.Server.Services.Map
     {
         #region Variables
 
-        private DateTime lastAtmosDisplayPush;
         private int mapHeight;
         private int mapWidth;
         public int tileSpacing = 64;
         private const int wallThickness = 24;
         private Dictionary<byte, string> tileStringTable = new Dictionary<byte, string>();
         private QuadTree<Tile> _groundArray;
-        private QuadTree<Tile> _wallArray;
         private RectangleF worldArea;
 
         #endregion
@@ -47,21 +44,6 @@ namespace SS14.Server.Services.Map
         #endregion
 
         #region IMapManager Members
-
-        /// <summary>
-        /// This function takes the gas cell from one tile and moves it to another, reconnecting all of the references in adjacent tiles.
-        /// Use this when a new tile is generated at a map location.
-        /// </summary>
-        /// <param name="fromTile">Tile to move gas information/cell from</param>
-        /// <param name="toTile">Tile to move gas information/cell to</param>
-        public void MoveGasCell(ITile fromTile, ITile toTile)
-        {
-            if (fromTile == null)
-                return;
-            GasCell g = (fromTile as Tile).gasCell;
-            (toTile as Tile).gasCell = g;
-            g.AttachToTile((toTile as Tile));
-        }
 
         public void Shutdown()
         {
@@ -91,7 +73,6 @@ namespace SS14.Server.Services.Map
         public ITile[] GetAllTilesIn(RectangleF area)
         {
             List<Tile> tiles = _groundArray.Query(area);
-            tiles.AddRange(_wallArray.Query(area));
             return tiles.ToArray();
         }
 
@@ -99,16 +80,6 @@ namespace SS14.Server.Services.Map
         public ITile[] GetAllFloorIn(RectangleF Area)
         {
             return _groundArray.Query(Area).ToArray();
-        }
-
-        public ITile[] GetAllWallIn(RectangleF Area)
-        {
-            return _wallArray.Query(Area).ToArray();
-        }
-
-        public ITile GetWallAt(Vector2 pos)
-        {
-            return GetAllWallIn(new RectangleF(pos.X, pos.Y, 2f, 2f)).FirstOrDefault();
         }
 
         public ITile GetFloorAt(Vector2 pos)
@@ -142,16 +113,8 @@ namespace SS14.Server.Services.Map
             var tile = GenerateNewTile(pos, newType, dir) as Tile;
             if (tile == null)
                 return null;
-            //Transfer the gas cell from the old tile to the new tile.
+
             Tile t = (Tile)GetTypeAt(newType, pos);
-            if (t != null && t.GasPermeable && tile.GasPermeable)
-            {
-                MoveGasCell(t, tile);
-            }
-            else
-            {
-                tile.GasCell = new GasCell((Tile)tile);
-            }
 
             RemoveTile(t);
             AddTile(tile);
@@ -349,42 +312,21 @@ namespace SS14.Server.Services.Map
 
         private void AddTile(Tile t)
         {
-            if (t.GetType().Name == "Wall")
-            {
-                _wallArray.Insert(t);
-            }
-            else
-            {
-                _groundArray.Insert(t);
-            }
+            _groundArray.Insert(t);
         }
 
         private bool RemoveTile(Tile t)
         {
             if (t == null)
                 return false;
-            if (t.GetType().Name == "Wall")
-            {
-                _wallArray.Remove(t);
-            }
-            else
-            {
-                _groundArray.Remove(t);
-            }
+
+            _groundArray.Remove(t);
 
             return true;
         }
 
         public void UpdateTile(Tile t)
         {
-            if (t == null || t.gasCell == null)
-                return;
-            t.gasCell.SetNeighbours(this);
-            
-            foreach (Tile u in GetAllTilesIn(new RectangleF(t.WorldPosition.X - tileSpacing, t.WorldPosition.Y - tileSpacing, tileSpacing * 2, tileSpacing * 2)))
-            {
-                u.gasCell.SetNeighbours(this);
-            }
 
         }
 
@@ -456,7 +398,6 @@ namespace SS14.Server.Services.Map
             worldArea = new RectangleF(0, 0, mapWidth * tileSpacing, mapHeight * tileSpacing);
 
             _groundArray = new QuadTree<Tile>(new SizeF(tileSpacing * 2f, tileSpacing * 2f), 4);
-            _wallArray = new QuadTree<Tile>(new SizeF(tileSpacing * 2f, tileSpacing * 2f), 4);
 
 
             while (!sr.EndOfStream)
@@ -480,7 +421,6 @@ namespace SS14.Server.Services.Map
             mapWidth = 50;
             mapHeight = 50;
             _groundArray = new QuadTree<Tile>(new SizeF(tileSpacing * 2f, tileSpacing * 2f), 4);
-            _wallArray = new QuadTree<Tile>(new SizeF(tileSpacing * 2f, tileSpacing * 2f), 4);
 
             worldArea = new RectangleF(0, 0, mapWidth * tileSpacing, mapHeight * tileSpacing);
 

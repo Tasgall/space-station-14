@@ -23,7 +23,7 @@ namespace SS14.Client.Services.UserInterface.Components
         private readonly Listbox _lstOverride;
         private readonly Label _overLabel;
         private readonly IPlacementManager _placementManager;
-        private readonly IResourceManager _resourceManager;
+        new private readonly IResourceManager _resourceManager;
 
         public EntitySpawnPanel(Size size, IResourceManager resourceManager, IPlacementManager placementManager)
             : base("Entity Spawn Panel", size, resourceManager)

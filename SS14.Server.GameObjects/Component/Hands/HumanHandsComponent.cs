@@ -46,10 +46,10 @@ namespace SS14.Server.GameObjects
 
             if (sender == this)
                 return ComponentReplyMessage.Empty;
-
+            /*
             switch (type)
             {
-                /*case ComponentMessageType.DisassociateEntity:
+                case ComponentMessageType.DisassociateEntity:
                     var entDrop = (Entity) list[0];
                     Drop(entDrop);
                     break;
@@ -100,8 +100,8 @@ namespace SS14.Server.GameObjects
                     break;
                 case ComponentMessageType.Die:
                     DropAll();
-                    break;*/
-            }
+                    break;
+            }*/
 
             return reply;
         }

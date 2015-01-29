@@ -8,8 +8,6 @@ namespace SS14.Server.Services.Tiles
         public Floor(RectangleF rectangle, MapManager _map)
             : base(rectangle, _map)
         {
-            StartWithAtmos = true;
-            GasPermeable = true;
         }
     }
 }

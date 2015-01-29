@@ -9,7 +9,7 @@ namespace SS14.Client.Services.UserInterface.Components
     internal sealed class ExamineWindow : Window
     {
         private readonly Label _entityDescription;
-        private readonly IResourceManager _resourceManager;
+        new private readonly IResourceManager _resourceManager;
         private Sprite _entitySprite;
 
         public ExamineWindow(Size size, Entity entity, IResourceManager resourceManager)

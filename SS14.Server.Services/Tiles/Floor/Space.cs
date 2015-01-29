@@ -8,8 +8,6 @@ namespace SS14.Server.Services.Tiles
         public Space(RectangleF rectangle, MapManager _map)
             : base(rectangle, _map)
         {
-            GasPermeable = true;
-            GasSink = true;
         }
     }
 }

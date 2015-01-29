@@ -1,4 +1,6 @@
-﻿using SS14.Server.Interfaces.Atmos;
+﻿#if false
+
+using SS14.Server.Interfaces.Atmos;
 using SS14.Shared;
 using SS14.Shared.IoC;
 using System;
@@ -247,3 +249,5 @@ namespace SS14.Server.Services.Atmos
         }
     }
 }
+
+#endif

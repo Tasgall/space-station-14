@@ -1,7 +1,6 @@
 ﻿using Lidgren.Network;
 using SS14.Server.Interfaces.Atmos;
 using SS14.Server.Interfaces.Tiles;
-using SS14.Server.Services.Atmos;
 using SS14.Server.Services.Map;
 using SS14.Shared;
 using System;
@@ -13,7 +12,6 @@ namespace SS14.Server.Services.Tiles
     {
         private readonly RectangleF _rectangle;
         private readonly MapManager map;
-        public GasCell gasCell;
 
 
         public Vector2 WorldPosition
@@ -52,22 +50,6 @@ namespace SS14.Server.Services.Tiles
             message.Write((byte) type);
             map.SendMessage(message);
         }
-
-        #endregion
-
-        #region getters / setters
-
-        public IGasCell GasCell
-        {
-            get { return gasCell; }
-            set { gasCell = (GasCell) value; }
-        }
-
-        public bool StartWithAtmos { get; set; }
-
-        public bool GasPermeable { get; set; }
-
-        public bool GasSink { get; set; }
 
         #endregion
 

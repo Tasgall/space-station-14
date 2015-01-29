@@ -27,23 +27,6 @@ namespace SS14.Server.GameObjects
             GasEffect();*/
         }
 
-        private void GasEffect()
-        {
-
-            ITile t = IoCManager.Resolve<IMapManager>().GetFloorAt(Owner.GetComponent<TransformComponent>(ComponentFamily.Transform).Position);
-            if (t == null)
-                return;
-            Vector2 gasVel = t.GasCell.GasVelocity;
-            if (gasVel.Abs() > Mass) // Stop tiny wobbles
-            {
-                Owner.SendMessage(this, ComponentMessageType.PhysicsMove,
-                                  Owner.GetComponent<TransformComponent>(ComponentFamily.Transform).Position.X +
-                                  gasVel.X,
-                                  Owner.GetComponent<TransformComponent>(ComponentFamily.Transform).Position.Y +
-                                  gasVel.Y);
-            }
-        }
-
         public override void SetParameter(ComponentParameter parameter)
         {
             base.SetParameter(parameter);

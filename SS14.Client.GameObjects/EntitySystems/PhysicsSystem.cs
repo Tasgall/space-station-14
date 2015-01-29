@@ -28,6 +28,8 @@ namespace SS14.Client.GameObjects.EntitySystems
         {
             var entities = EntityManager.GetEntities(EntityQuery);
             return;
+
+#if false
             foreach(var entity in entities)
             {
                 var transform = entity.GetComponent<TransformComponent>(ComponentFamily.Transform);
@@ -75,6 +77,7 @@ namespace SS14.Client.GameObjects.EntitySystems
                     transform.Position += movement;
                 }*/
             }
+#endif
         }
 
     }

@@ -11,7 +11,6 @@ namespace SS14.Server
     internal class EntryPoint
     {
         private SS14Server _server;
-        private Timer t;
         private static bool fullDump = false;
 
         private static void Main(string[] args)

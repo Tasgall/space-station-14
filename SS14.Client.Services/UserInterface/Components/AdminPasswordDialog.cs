@@ -13,7 +13,7 @@ namespace SS14.Client.Services.UserInterface.Components
         private readonly INetworkManager _networkManager;
 
         private readonly Button _okayButton;
-        private readonly IResourceManager _resourceManager;
+        new private readonly IResourceManager _resourceManager;
         private readonly Textbox _textboxPassword;
 
         public AdminPasswordDialog(Size size, INetworkManager networkManager, IResourceManager resourceManager)
